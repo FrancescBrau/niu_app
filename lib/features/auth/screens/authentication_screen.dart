@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:niu_app/config/const.dart';
 import 'package:niu_app/features/auth/widgets/build_email_field.dart';
 import 'package:niu_app/features/auth/widgets/build_message_text.dart';
+import 'package:niu_app/features/auth/widgets/build_toggle_mode_button.dart';
+import 'package:niu_app/features/auth/widgets/register_or_login_button.dart';
 import 'package:niu_app/features/profile/profile_screen.dart';
 import 'package:niu_app/shared/repositories/shared_preferences.dart';
+import 'package:niu_app/shared/utils.dart';
 
 class AuthenticationScreen extends StatefulWidget {
   const AuthenticationScreen(
@@ -23,10 +26,10 @@ class AuthenticationScreenState extends State<AuthenticationScreen> {
   bool isLoading = false;
   bool isRegisterMode = true;
 
-  Future<void> _registerOrLogin() async {
+  Future<void> registerOrLogin() async {
     final email = emailController.text.trim();
 
-    if (!_isValidEmail(email)) {
+    if (!isValidEmail(email)) {
       _showMessage('Please, insert a valid email');
       return;
     }
@@ -68,10 +71,6 @@ class AuthenticationScreenState extends State<AuthenticationScreen> {
     }
   }
 
-  bool _isValidEmail(String email) {
-    return email.isNotEmpty;
-  }
-
   void _showMessage(String msg) {
     setState(() {
       message = msg;
@@ -102,45 +101,24 @@ class AuthenticationScreenState extends State<AuthenticationScreen> {
           children: [
             BuildEmailField(emailController: emailController),
             smallSpace,
-            _buildSubmitButton(),
+            RegisterOrLoginButton(
+                isLoading: isLoading,
+                isRegisterMode: isRegisterMode,
+                registerOrLogin: registerOrLogin),
             smallSpace,
-            _buildToggleModeButton(),
-            smallSpace,
-            BuildMessageText(message: message),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSubmitButton() {
-    return ElevatedButton(
-      onPressed: isLoading ? null : _registerOrLogin,
-      child: isLoading
-          ? const SizedBox(
-              height: 20,
-              width: 20,
-              child: CircularProgressIndicator(),
-            )
-          : Text(isRegisterMode ? 'Sing up' : 'Log in'),
-    );
-  }
-
-  Widget _buildToggleModeButton() {
-    return Center(
-      child: TextButton(
-        onPressed: isLoading
-            ? null
-            : () {
+            BuildToggleModeButton(
+              isLoading: isLoading,
+              isRegisterMode: isRegisterMode,
+              onRegisterMode: () {
                 setState(() {
                   isRegisterMode = !isRegisterMode;
                   message = '';
                 });
               },
-        child: Text(
-          isRegisterMode
-              ? 'Already have an account? Log in!'
-              : 'No account yet? Register!',
+            ),
+            smallSpace,
+            BuildMessageText(message: message),
+          ],
         ),
       ),
     );

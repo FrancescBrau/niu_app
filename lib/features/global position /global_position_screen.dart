@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class GlobalPositionScreen extends StatelessWidget {
-  const GlobalPositionScreen();
+  const GlobalPositionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

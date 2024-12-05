@@ -79,18 +79,13 @@ class ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      const Center(
-                        child: CircleAvatar(
-                          radius: 50,
-                          backgroundImage: AssetImage('assets/images/pep.png'),
-                        ),
-                      ),
-                      midSpace,
+                      const Center(child: Icon(Icons.person, size: 50)),
+                      /*midSpace,
                       Center(
                         child: Text(emailController.text,
                             style: const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
-                      ),
+                      ),*/
                       midSpace,
                       const Text(
                         'Contact Info',
