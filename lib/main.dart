@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:niu_app/config/themes.dart';
+import 'package:niu_app/features/auth/authentication_screen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -23,15 +24,10 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: isDarkTheme ? ThemeMode.dark : ThemeMode.light,
-      home: const Scaffold(
-        body: Center(
-          child: Text('Test!'),
-        ),
-      ),
-    );
+        debugShowCheckedModeBanner: false,
+        theme: lightTheme,
+        darkTheme: darkTheme,
+        themeMode: isDarkTheme ? ThemeMode.dark : ThemeMode.light,
+        home: const AuthenticationScreen());
   }
 }
