@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:niu_app/shared/shared_preferences.dart';
+import 'package:niu_app/config/const.dart';
+import 'package:niu_app/shared/repositories/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String email;
 
-  const ProfileScreen({super.key, required this.email});
+  const ProfileScreen({
+    super.key,
+    required this.email,
+    required this.toggleTheme,
+    required this.isDarkTheme,
+  });
+
+  final VoidCallback toggleTheme;
+  final bool isDarkTheme;
 
   @override
   State<ProfileScreen> createState() => ProfileScreenState();
@@ -53,72 +62,91 @@ class ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile'),
-      ),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Padding(
-              padding: const EdgeInsets.all(32),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const Center(
-                      child: CircleAvatar(
-                        radius: 50,
-                        backgroundImage: AssetImage('assets/images/pep.png'),
+        appBar: AppBar(
+          title: const Text('Profile'),
+          centerTitle: true,
+          actions: [
+            IconButton(
+                onPressed: widget.toggleTheme,
+                icon: Icon(
+                    widget.isDarkTheme ? Icons.dark_mode : Icons.light_mode))
+          ],
+        ),
+        body: isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : Padding(
+                padding: const EdgeInsets.all(32),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      const Center(
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage: AssetImage('assets/images/pep.png'),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    Center(
-                      child: Text(emailController.text,
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold)),
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      'Contact Info',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      controller: emailController,
-                      decoration: const InputDecoration(labelText: 'Username'),
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      controller: phoneController,
-                      decoration: const InputDecoration(
-                        labelText: 'Phone',
-                        prefixIcon: Icon(Icons.phone),
+                      midSpace,
+                      Center(
+                        child: Text(emailController.text,
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold)),
                       ),
-                      keyboardType: TextInputType.phone,
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      controller: addressController,
-                      decoration: const InputDecoration(
-                          labelText: 'Address', prefixIcon: Icon(Icons.mail)),
-                    ),
-                    const SizedBox(height: 20),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: _updateUserData,
-                        child: const Text('Save your data'),
+                      midSpace,
+                      const Text(
+                        'Contact Info',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                    Center(
-                      child: Text(
-                        message,
-                        style: const TextStyle(color: Colors.green),
-                        textAlign: TextAlign.center,
+                      midSpace,
+                      TextFormField(
+                        controller: emailController,
+                        decoration:
+                            const InputDecoration(labelText: 'Username'),
+                        keyboardType: TextInputType.emailAddress,
                       ),
-                    ),
-                  ]),
+                      midSpace,
+                      TextFormField(
+                        controller: phoneController,
+                        decoration: const InputDecoration(
+                          labelText: 'Phone',
+                          prefixIcon: Icon(Icons.phone),
+                        ),
+                        keyboardType: TextInputType.phone,
+                      ),
+                      midSpace,
+                      TextFormField(
+                        controller: addressController,
+                        decoration: const InputDecoration(
+                            labelText: 'Address', prefixIcon: Icon(Icons.mail)),
+                      ),
+                      midSpace,
+                      Center(
+                        child: ElevatedButton(
+                          onPressed: _updateUserData,
+                          child: const Text('Save your data'),
+                        ),
+                      ),
+                      smallSpace,
+                      Center(
+                        child: Text(
+                          message,
+                          style: const TextStyle(color: Colors.green),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ]),
+              ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.language),
+              label: 'Global Position',
             ),
-    );
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+        ));
   }
 }

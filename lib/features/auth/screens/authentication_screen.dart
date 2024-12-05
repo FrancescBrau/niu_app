@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:niu_app/config/const.dart';
+import 'package:niu_app/features/auth/widgets/build_email_field.dart';
+import 'package:niu_app/features/auth/widgets/build_message_text.dart';
 import 'package:niu_app/features/profile/profile_screen.dart';
-import 'package:niu_app/shared/shared_preferences.dart';
+import 'package:niu_app/shared/repositories/shared_preferences.dart';
 
 class AuthenticationScreen extends StatefulWidget {
-  const AuthenticationScreen({super.key});
+  const AuthenticationScreen(
+      {super.key, required this.toggleTheme, required this.isDarkTheme});
+
+  final VoidCallback toggleTheme;
+  final bool isDarkTheme;
 
   @override
   AuthenticationScreenState createState() => AuthenticationScreenState();
@@ -76,7 +83,11 @@ class AuthenticationScreenState extends State<AuthenticationScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ProfileScreen(email: email),
+        builder: (context) => ProfileScreen(
+          email: email,
+          toggleTheme: widget.toggleTheme,
+          isDarkTheme: widget.isDarkTheme,
+        ),
       ),
     );
   }
@@ -89,27 +100,16 @@ class AuthenticationScreenState extends State<AuthenticationScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildEmailField(),
-            const SizedBox(height: 16),
+            BuildEmailField(emailController: emailController),
+            smallSpace,
             _buildSubmitButton(),
-            const SizedBox(height: 16),
+            smallSpace,
             _buildToggleModeButton(),
-            const SizedBox(height: 16),
-            _buildMessageText(),
+            smallSpace,
+            BuildMessageText(message: message),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildEmailField() {
-    return TextField(
-      controller: emailController,
-      decoration: const InputDecoration(
-        labelText: 'Email',
-        border: OutlineInputBorder(),
-      ),
-      keyboardType: TextInputType.emailAddress,
     );
   }
 
@@ -127,28 +127,22 @@ class AuthenticationScreenState extends State<AuthenticationScreen> {
   }
 
   Widget _buildToggleModeButton() {
-    return TextButton(
-      onPressed: isLoading
-          ? null
-          : () {
-              setState(() {
-                isRegisterMode = !isRegisterMode;
-                message = '';
-              });
-            },
-      child: Text(
-        isRegisterMode
-            ? 'Already have an account? Log in!'
-            : 'No account yet? Register!',
+    return Center(
+      child: TextButton(
+        onPressed: isLoading
+            ? null
+            : () {
+                setState(() {
+                  isRegisterMode = !isRegisterMode;
+                  message = '';
+                });
+              },
+        child: Text(
+          isRegisterMode
+              ? 'Already have an account? Log in!'
+              : 'No account yet? Register!',
+        ),
       ),
-    );
-  }
-
-  Widget _buildMessageText() {
-    return Text(
-      message,
-      style: const TextStyle(color: Colors.red),
-      textAlign: TextAlign.center,
     );
   }
 }
