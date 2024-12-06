@@ -109,7 +109,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                     const Center(child: Icon(Icons.person, size: 50)),
                     smallSpace,
                     Center(
-                      child: Text('E-mail: ${widget.email}',
+                      child: Text(widget.email,
                           style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold)),
                     ),

@@ -139,9 +139,12 @@ class ContractScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Hello World'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Contracts'),
+      ),
+      body: const Center(
+        child: Text('Manage contracts'),
       ),
     );
   }
@@ -152,9 +155,10 @@ class MailboxScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Hello World'),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Mailbox')),
+      body: const Center(
+        child: Text('Show messages'),
       ),
     );
   }
@@ -165,9 +169,12 @@ class AccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Hello World'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Account'),
+      ),
+      body: const Center(
+        child: const Text('Manage your account'),
       ),
     );
   }
@@ -178,9 +185,12 @@ class AlertScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Hello World'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Alerts'),
+      ),
+      body: const Center(
+        child: Text('Manage alerts'),
       ),
     );
   }
@@ -191,9 +201,12 @@ class PropertieScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Hello World'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Properties'),
+      ),
+      body: const Center(
+        child: Text('Manage your properties'),
       ),
     );
   }
