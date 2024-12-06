@@ -1,4 +1,6 @@
 abstract class DatabaseRepository {
+  //USERS
+
   Future<bool> createUser(String email);
 
   Future<Map<String, String?>?> readUser(String email);
@@ -13,4 +15,10 @@ abstract class DatabaseRepository {
   });
 
   Future<bool> deleteUser(String email);
+
+  //ALERTS
+
+  Future<bool> addAlert(String alert);
+  Future<List<String>> getAlerts();
+  Future<bool> removeAlert(String alert);
 }

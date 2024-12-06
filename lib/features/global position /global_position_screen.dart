@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:niu_app/features/global%20position%20/screens/alert_screen.dart';
 import 'package:niu_app/features/global%20position%20/widgets/custom_card.dart';
 import 'package:niu_app/features/profile/profile_screen.dart';
 
@@ -169,22 +170,6 @@ class AccountScreen extends StatelessWidget {
       ),
       body: const Center(
         child: Text('Manage your account'),
-      ),
-    );
-  }
-}
-
-class AlertScreen extends StatelessWidget {
-  const AlertScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Alerts'),
-      ),
-      body: const Center(
-        child: Text('Manage alerts'),
       ),
     );
   }

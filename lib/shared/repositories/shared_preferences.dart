@@ -3,6 +3,9 @@ import 'database_repository.dart';
 
 class SharedPreferencesRepository extends DatabaseRepository {
   static const String usersKey = 'users';
+  static const String alertKey = 'alerts';
+
+//USER FUNCTION
 
   @override
   Future<bool> createUser(String email) async {
@@ -97,5 +100,32 @@ class SharedPreferencesRepository extends DatabaseRepository {
     await prefs.remove('$email-zip');
     await prefs.remove('$email-city');
     return true;
+  }
+
+// ALERTS FUNCTION
+
+  @override
+  Future<bool> addAlert(String alerts) async {
+    final prefs = await SharedPreferences.getInstance();
+    final alert = prefs.getStringList(alertKey) ?? [];
+    alert.add(alerts);
+    return await prefs.setStringList(alertKey, alert);
+  }
+
+  @override
+  Future<List<String>> getAlerts() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList(alertKey) ?? [];
+  }
+
+  @override
+  Future<bool> removeAlert(String alert) async {
+    final prefs = await SharedPreferences.getInstance();
+    final alerts = prefs.getStringList(alertKey) ?? [];
+    if (!alerts.contains(alert)) {
+      return false;
+    }
+    alerts.remove(alert);
+    return await prefs.setStringList(alertKey, alerts);
   }
 }
