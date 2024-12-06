@@ -8,6 +8,8 @@ abstract class DatabaseRepository {
     String? user,
     String? phone,
     String? address,
+    String? zip,
+    String? city,
   });
 
   Future<bool> deleteUser(String email);

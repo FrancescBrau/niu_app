@@ -25,6 +25,8 @@ class ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController userController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
+  final TextEditingController zipController = TextEditingController();
+  final TextEditingController cityController = TextEditingController();
   bool isLoading = true;
   String message = '';
 
@@ -41,6 +43,8 @@ class ProfileScreenState extends State<ProfileScreen> {
       userController.text = userData['user'] ?? '';
       phoneController.text = userData['phone'] ?? '';
       addressController.text = userData['address'] ?? '';
+      zipController.text = userData['zip'] ?? '';
+      cityController.text = userData['city'] ?? '';
     }
     setState(() {
       isLoading = false;
@@ -74,62 +78,80 @@ class ProfileScreenState extends State<ProfileScreen> {
         ),
         body: isLoading
             ? const Center(child: CircularProgressIndicator())
-            : Padding(
-                padding: const EdgeInsets.all(32),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const Center(child: Icon(Icons.person, size: 50)),
-                      /*midSpace,
-                      Center(
-                        child: Text(emailController.text,
-                            style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                      ),*/
-                      midSpace,
-                      const Text(
-                        'Contact Info',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      midSpace,
-                      TextFormField(
-                        controller: emailController,
-                        decoration:
-                            const InputDecoration(labelText: 'Username'),
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                      midSpace,
-                      TextFormField(
-                        controller: phoneController,
-                        decoration: const InputDecoration(
-                          labelText: 'Phone',
-                          prefixIcon: Icon(Icons.phone),
+            : SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(32),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        const Center(child: Icon(Icons.person, size: 50)),
+                        midSpace,
+                        Center(
+                          child: Text(emailController.text,
+                              style: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
                         ),
-                        keyboardType: TextInputType.phone,
-                      ),
-                      midSpace,
-                      TextFormField(
-                        controller: addressController,
-                        decoration: const InputDecoration(
-                            labelText: 'Address', prefixIcon: Icon(Icons.mail)),
-                      ),
-                      midSpace,
-                      Center(
-                        child: ElevatedButton(
-                          onPressed: _updateUserData,
-                          child: const Text('Save your data'),
+                        midSpace,
+                        const Text(
+                          'Contact Info',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
-                      ),
-                      smallSpace,
-                      Center(
-                        child: Text(
-                          message,
-                          style: const TextStyle(color: Colors.green),
-                          textAlign: TextAlign.center,
+                        midSpace,
+                        TextFormField(
+                          controller: emailController,
+                          decoration:
+                              const InputDecoration(labelText: 'Username'),
+                          keyboardType: TextInputType.emailAddress,
                         ),
-                      ),
-                    ]),
+                        midSpace,
+                        TextFormField(
+                          controller: phoneController,
+                          decoration: const InputDecoration(
+                            labelText: 'Phone',
+                            prefixIcon: Icon(Icons.phone),
+                          ),
+                          keyboardType: TextInputType.phone,
+                        ),
+                        midSpace,
+                        TextFormField(
+                          controller: addressController,
+                          decoration: const InputDecoration(
+                              labelText: 'Address',
+                              prefixIcon: Icon(Icons.mail)),
+                        ),
+                        midSpace,
+                        TextFormField(
+                            controller: zipController,
+                            decoration: const InputDecoration(
+                                labelText: 'ZIP',
+                                prefixIcon: Icon(Icons.location_on)),
+                            keyboardType: TextInputType.text),
+                        midSpace,
+                        TextFormField(
+                          controller: cityController,
+                          decoration: const InputDecoration(
+                              labelText: 'City',
+                              prefixIcon: Icon(Icons.location_city)),
+                          keyboardType: TextInputType.text,
+                        ),
+                        midSpace,
+                        Center(
+                          child: ElevatedButton(
+                            onPressed: _updateUserData,
+                            child: const Text('Save your data'),
+                          ),
+                        ),
+                        smallSpace,
+                        Center(
+                          child: Text(
+                            message,
+                            style: const TextStyle(color: Colors.green),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ]),
+                ),
               ),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[

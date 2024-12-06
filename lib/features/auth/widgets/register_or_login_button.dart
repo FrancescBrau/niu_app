@@ -15,7 +15,9 @@ class RegisterOrLoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ElevatedButton(
-        onPressed: isLoading ? null : registerOrLogin(),
+        onPressed: () async {
+          await registerOrLogin();
+        },
         child: isLoading
             ? const SizedBox(
                 height: 20,

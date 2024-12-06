@@ -19,6 +19,8 @@ class SharedPreferencesRepository extends DatabaseRepository {
     await prefs.setString('$email-user', '');
     await prefs.setString('$email-phone', '');
     await prefs.setString('$email-address', '');
+    await prefs.setString('$email-zip', '');
+    await prefs.setString('$email-city', '');
     return true;
   }
 
@@ -33,16 +35,24 @@ class SharedPreferencesRepository extends DatabaseRepository {
     final user = prefs.getString('$email-user');
     final phone = prefs.getString('$email-phone');
     final address = prefs.getString('$email-address');
+    final zip = prefs.getString('$email-zip');
+    final city = prefs.getString('$email-city');
     return {
       'user': user,
       'phone': phone,
       'address': address,
+      'zip': zip,
+      'city': city
     };
   }
 
   @override
   Future<bool> updateUser(String email,
-      {String? user, String? phone, String? address}) async {
+      {String? user,
+      String? phone,
+      String? address,
+      String? zip,
+      String? city}) async {
     final prefs = await SharedPreferences.getInstance();
     final users = prefs.getStringList(usersKey) ?? [];
     if (!users.contains(email)) {
@@ -57,6 +67,12 @@ class SharedPreferencesRepository extends DatabaseRepository {
     }
     if (address != null) {
       await prefs.setString('$email-address', address);
+    }
+    if (zip != null) {
+      await prefs.setString('$email-zip', '');
+    }
+    if (city != null) {
+      await prefs.setString('$email-city', '');
     }
 
     return true;
@@ -76,6 +92,8 @@ class SharedPreferencesRepository extends DatabaseRepository {
     await prefs.remove('$email-user');
     await prefs.remove('$email-phone');
     await prefs.remove('$email-address');
+    await prefs.remove('$email-zip');
+    await prefs.remove('$email-city');
     return true;
   }
 }
