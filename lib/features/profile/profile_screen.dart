@@ -107,12 +107,18 @@ class ProfileScreenState extends State<ProfileScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     const Center(child: Icon(Icons.person, size: 50)),
-                    smallSpace,
                     Center(
                       child: Text(widget.email,
                           style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold)),
                     ),
+                    Center(
+                        child: TextButton(
+                            onPressed: loguot,
+                            child: const Text(
+                              'log out',
+                              style: TextStyle(color: Colors.red),
+                            ))),
                     smallSpace,
                     const Text(
                       'Contact Info',
@@ -170,14 +176,6 @@ class ProfileScreenState extends State<ProfileScreen> {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    smallSpace,
-                    Center(
-                        child: ElevatedButton(
-                            onPressed: loguot,
-                            child: const Text(
-                              'log out',
-                              style: TextStyle(color: Colors.red),
-                            )))
                   ],
                 ),
               ),

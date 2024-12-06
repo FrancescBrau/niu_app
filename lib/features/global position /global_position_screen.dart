@@ -27,12 +27,6 @@ class _GlobalPositionScreenState extends State<GlobalPositionScreen> {
         title: const Text('Global Position'),
         centerTitle: true,
         automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            onPressed: widget.toggleTheme,
-            icon: Icon(widget.isDarkTheme ? Icons.dark_mode : Icons.light_mode),
-          ),
-        ],
       ),
       body: ListView(
         children: <Widget>[
@@ -174,7 +168,7 @@ class AccountScreen extends StatelessWidget {
         title: const Text('Account'),
       ),
       body: const Center(
-        child: const Text('Manage your account'),
+        child: Text('Manage your account'),
       ),
     );
   }
