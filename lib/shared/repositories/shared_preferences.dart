@@ -47,12 +47,14 @@ class SharedPreferencesRepository extends DatabaseRepository {
   }
 
   @override
-  Future<bool> updateUser(String email,
-      {String? user,
-      String? phone,
-      String? address,
-      String? zip,
-      String? city}) async {
+  Future<bool> updateUser(
+    String email, {
+    String? user,
+    String? phone,
+    String? address,
+    String? zip,
+    String? city,
+  }) async {
     final prefs = await SharedPreferences.getInstance();
     final users = prefs.getStringList(usersKey) ?? [];
     if (!users.contains(email)) {
@@ -69,10 +71,10 @@ class SharedPreferencesRepository extends DatabaseRepository {
       await prefs.setString('$email-address', address);
     }
     if (zip != null) {
-      await prefs.setString('$email-zip', '');
+      await prefs.setString('$email-zip', zip);
     }
     if (city != null) {
-      await prefs.setString('$email-city', '');
+      await prefs.setString('$email-city', city);
     }
 
     return true;
