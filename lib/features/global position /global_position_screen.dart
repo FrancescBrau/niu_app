@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:niu_app/features/global%20position%20/widgets/custom_card.dart';
 import 'package:niu_app/features/profile/profile_screen.dart';
 
 class GlobalPositionScreen extends StatefulWidget {
@@ -24,6 +25,8 @@ class _GlobalPositionScreenState extends State<GlobalPositionScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Global Position'),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             onPressed: widget.toggleTheme,
@@ -31,8 +34,74 @@ class _GlobalPositionScreenState extends State<GlobalPositionScreen> {
           ),
         ],
       ),
-      body: const Center(
-        child: Text('This is the Global Position Screen'),
+      body: ListView(
+        children: <Widget>[
+          CustomCard(
+            title: 'Properties',
+            description: 'Here you can find your appartments',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PropertieScreen(),
+                ),
+              );
+            },
+            imagePath: 'assets/images/vivendes.png',
+          ),
+          CustomCard(
+            title: 'Alerts',
+            description: 'Here you can manage your daily life as owner',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AlertScreen(),
+                ),
+              );
+            },
+            imagePath: 'assets/images/alert.png',
+          ),
+          CustomCard(
+            title: 'Accounting',
+            description: 'Here you can manage your creditors and debtors ',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AccountScreen(),
+                ),
+              );
+            },
+            imagePath: 'assets/images/conta.png',
+          ),
+          CustomCard(
+            title: 'Contracts',
+            description: 'Sign contracts and find all documents here',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ContractScreen(),
+                ),
+              );
+            },
+            imagePath: 'assets/images/agreement.png',
+          ),
+          CustomCard(
+            title: 'Mailbox',
+            description: 'here you can chat with other contracting parties',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const MailboxScreen(),
+                ),
+              );
+            },
+            imagePath: 'assets/images/misatge.png',
+          )
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
@@ -60,6 +129,71 @@ class _GlobalPositionScreenState extends State<GlobalPositionScreen> {
             label: 'Profile',
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ContractScreen extends StatelessWidget {
+  const ContractScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Text('Hello World'),
+      ),
+    );
+  }
+}
+
+class MailboxScreen extends StatelessWidget {
+  const MailboxScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Text('Hello World'),
+      ),
+    );
+  }
+}
+
+class AccountScreen extends StatelessWidget {
+  const AccountScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Text('Hello World'),
+      ),
+    );
+  }
+}
+
+class AlertScreen extends StatelessWidget {
+  const AlertScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Text('Hello World'),
+      ),
+    );
+  }
+}
+
+class PropertieScreen extends StatelessWidget {
+  const PropertieScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Text('Hello World'),
       ),
     );
   }

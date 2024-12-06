@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:niu_app/config/const.dart';
+import 'package:niu_app/features/auth/screens/authentication_screen.dart';
 import '../global%20position%20/global_position_screen.dart';
 import 'package:niu_app/shared/repositories/shared_preferences.dart';
 
@@ -89,6 +90,7 @@ class ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         title: const Text('Profile'),
         centerTitle: true,
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             onPressed: widget.toggleTheme,
@@ -168,6 +170,14 @@ class ProfileScreenState extends State<ProfileScreen> {
                         textAlign: TextAlign.center,
                       ),
                     ),
+                    smallSpace,
+                    Center(
+                        child: ElevatedButton(
+                            onPressed: loguot,
+                            child: const Text(
+                              'log out',
+                              style: TextStyle(color: Colors.red),
+                            )))
                   ],
                 ),
               ),
@@ -186,6 +196,19 @@ class ProfileScreenState extends State<ProfileScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  void loguot() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AuthenticationScreen(
+          toggleTheme: widget.toggleTheme,
+          isDarkTheme: widget.isDarkTheme,
+        ),
+      ),
+      (route) => false,
     );
   }
 }
