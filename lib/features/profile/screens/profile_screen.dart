@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:niu_app/config/const.dart';
-import 'package:niu_app/features/auth/screens/authentication_screen.dart';
-import '../global%20position%20/global_position_screen.dart';
-import 'package:niu_app/shared/repositories/shared_preferences.dart';
+import 'package:niu_app/features/profile/widgets/address.dart';
+import 'package:niu_app/features/profile/widgets/city.dart';
+import 'package:niu_app/features/profile/widgets/confirmation_message.dart';
+import 'package:niu_app/features/profile/widgets/contact_info.dart';
+import 'package:niu_app/features/profile/widgets/phone.dart';
+import 'package:niu_app/features/profile/widgets/user_icon.dart';
+import 'package:niu_app/features/profile/widgets/username.dart';
+import 'package:niu_app/features/profile/widgets/zip.dart';
+import '../../../config/const.dart';
+import '../../../shared/repositories/shared_preferences.dart';
+import '../../auth/screens/authentication_screen.dart';
+import '../../global position /screens/global_position_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String email;
@@ -92,10 +100,59 @@ class ProfileScreenState extends State<ProfileScreen> {
         centerTitle: true,
         automaticallyImplyLeading: false,
         actions: [
-          IconButton(
-            onPressed: widget.toggleTheme,
-            icon: Icon(widget.isDarkTheme ? Icons.dark_mode : Icons.light_mode),
-          )
+          PopupMenuButton<String>(
+            onSelected: (String value) {
+              if (value == 'toggleTheme') {
+                widget.toggleTheme();
+                setState(() {});
+              } else if (value == 'logout') {
+                loguot();
+              } else if (value == 'deleteAccount') {
+                deleteAccount();
+              }
+            },
+            icon: const Icon(Icons.more_vert),
+            itemBuilder: (BuildContext context) => [
+              PopupMenuItem(
+                value: 'toggleTheme',
+                child: Row(
+                  children: [
+                    Icon(widget.isDarkTheme
+                        ? Icons.dark_mode
+                        : Icons.light_mode),
+                    const SizedBox(width: 8),
+                    Text(widget.isDarkTheme ? 'Light Mode' : 'Dark Mode'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'logout',
+                child: Row(
+                  children: [
+                    Icon(Icons.logout),
+                    SizedBox(width: 8),
+                    Text('Logout'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'deleteAccount',
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.delete_forever,
+                      color: Colors.red,
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      'Delete Account',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ],
       ),
       body: isLoading
@@ -106,61 +163,24 @@ class ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const Center(child: Icon(Icons.person, size: 50)),
+                    const UserIcon(),
                     Center(
                       child: Text(widget.email,
                           style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold)),
                     ),
-                    Center(
-                        child: TextButton(
-                            onPressed: loguot,
-                            child: const Text(
-                              'log out',
-                              style: TextStyle(color: Colors.red),
-                            ))),
                     smallSpace,
-                    const Text(
-                      'Contact Info',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
+                    const ContactInfo(),
                     smallSpace,
-                    TextFormField(
-                      controller: userController,
-                      decoration: const InputDecoration(labelText: 'Username'),
-                      keyboardType: TextInputType.text,
-                    ),
+                    Username(userController: userController),
                     midSpace,
-                    TextFormField(
-                      controller: phoneController,
-                      decoration: const InputDecoration(
-                        labelText: 'Phone',
-                        prefixIcon: Icon(Icons.phone),
-                      ),
-                      keyboardType: TextInputType.phone,
-                    ),
+                    Phone(phoneController: phoneController),
                     midSpace,
-                    TextFormField(
-                      controller: addressController,
-                      decoration: const InputDecoration(
-                          labelText: 'Address',
-                          prefixIcon: Icon(Icons.location_on)),
-                    ),
+                    Address(addressController: addressController),
                     midSpace,
-                    TextFormField(
-                        controller: zipController,
-                        decoration: const InputDecoration(
-                            labelText: 'ZIP', prefixIcon: Icon(Icons.place)),
-                        keyboardType: TextInputType.number),
+                    Zip(zipController: zipController),
                     midSpace,
-                    TextFormField(
-                      controller: cityController,
-                      decoration: const InputDecoration(
-                          labelText: 'City',
-                          prefixIcon: Icon(Icons.location_city)),
-                      keyboardType: TextInputType.text,
-                    ),
+                    City(cityController: cityController),
                     midSpace,
                     Center(
                       child: ElevatedButton(
@@ -170,11 +190,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                     ),
                     smallSpace,
                     Center(
-                      child: Text(
-                        message,
-                        style: const TextStyle(color: Colors.green),
-                        textAlign: TextAlign.center,
-                      ),
+                      child: ConfirmationMessage(message: message),
                     ),
                   ],
                 ),
@@ -208,5 +224,38 @@ class ProfileScreenState extends State<ProfileScreen> {
       ),
       (route) => false,
     );
+  }
+
+  void deleteAccount() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Confirm delete Account'),
+            content: const Text(
+                'Are you sure you want to delete your account? This action cannot be undone'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                  onPressed: () async {
+                    final currentContext = context;
+                    await SharedPreferencesRepository()
+                        .deleteUser(widget.email);
+                    if (currentContext.mounted) {
+                      Navigator.of(currentContext).pop();
+                      loguot();
+                    }
+                  },
+                  child: const Text(
+                    'Confirm Delete',
+                    style: TextStyle(
+                        color: Colors.red, fontWeight: FontWeight.bold),
+                  ))
+            ],
+          );
+        });
   }
 }

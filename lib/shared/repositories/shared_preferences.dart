@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'database_repository.dart';
 
@@ -88,7 +90,8 @@ class SharedPreferencesRepository extends DatabaseRepository {
     final prefs = await SharedPreferences.getInstance();
     final users = prefs.getStringList(usersKey) ?? [];
     if (!users.contains(email)) {
-      return false;
+      users.remove(email);
+      await prefs.setStringList(usersKey, users);
     }
 
     users.remove(email);
@@ -105,27 +108,33 @@ class SharedPreferencesRepository extends DatabaseRepository {
 // ALERTS FUNCTION
 
   @override
-  Future<bool> addAlert(String alerts) async {
-    final prefs = await SharedPreferences.getInstance();
-    final alert = prefs.getStringList(alertKey) ?? [];
-    alert.add(alerts);
-    return await prefs.setStringList(alertKey, alert);
-  }
-
   @override
-  Future<List<String>> getAlerts() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getStringList(alertKey) ?? [];
-  }
-
-  @override
-  Future<bool> removeAlert(String alert) async {
+  Future<bool> addAlert(Map<String, dynamic> alert) async {
     final prefs = await SharedPreferences.getInstance();
     final alerts = prefs.getStringList(alertKey) ?? [];
-    if (!alerts.contains(alert)) {
+    final alertJson = jsonEncode(alert);
+    alerts.add(alertJson);
+    return await prefs.setStringList(alertKey, alerts);
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getAlerts() async {
+    final prefs = await SharedPreferences.getInstance();
+    final alerts = prefs.getStringList(alertKey) ?? [];
+    return alerts
+        .map((alert) => jsonDecode(alert) as Map<String, dynamic>)
+        .toList();
+  }
+
+  @override
+  Future<bool> removeAlert(Map<String, dynamic> alert) async {
+    final prefs = await SharedPreferences.getInstance();
+    final alerts = prefs.getStringList(alertKey) ?? [];
+    final alertJson = jsonEncode(alert);
+    if (!alerts.contains(alertJson)) {
       return false;
     }
-    alerts.remove(alert);
+    alerts.remove(alertJson);
     return await prefs.setStringList(alertKey, alerts);
   }
 }

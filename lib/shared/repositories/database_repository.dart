@@ -18,7 +18,7 @@ abstract class DatabaseRepository {
 
   //ALERTS
 
-  Future<bool> addAlert(String alert);
-  Future<List<String>> getAlerts();
-  Future<bool> removeAlert(String alert);
+  Future<bool> addAlert(Map<String, dynamic> alert);
+  Future<List<Map<String, dynamic>>> getAlerts();
+  Future<bool> removeAlert(Map<String, dynamic> alert);
 }

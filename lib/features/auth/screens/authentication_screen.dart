@@ -4,7 +4,7 @@ import 'package:niu_app/features/auth/widgets/build_email_field.dart';
 import 'package:niu_app/features/auth/widgets/build_message_text.dart';
 import 'package:niu_app/features/auth/widgets/build_toggle_mode_button.dart';
 import 'package:niu_app/features/auth/widgets/register_or_login_button.dart';
-import 'package:niu_app/features/profile/profile_screen.dart';
+import 'package:niu_app/features/profile/screens/profile_screen.dart';
 import 'package:niu_app/shared/repositories/shared_preferences.dart';
 import 'package:niu_app/shared/utils.dart';
 

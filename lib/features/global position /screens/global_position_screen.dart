@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:niu_app/features/global%20position%20/screens/alert_screen.dart';
-import 'package:niu_app/features/global%20position%20/widgets/custom_card.dart';
-import 'package:niu_app/features/profile/profile_screen.dart';
+import 'package:niu_app/features/global%20position%20/features/account_screen.dart';
+import 'package:niu_app/features/global%20position%20/features/contract_screen.dart';
+import 'package:niu_app/features/global%20position%20/features/mailbox_screen.dart';
+import 'package:niu_app/features/global%20position%20/features/propertie_screen.dart';
+
+import '../../profile/screens/profile_screen.dart';
+import '../features/alert_screen.dart';
+import '../widgets/custom_card.dart';
 
 class GlobalPositionScreen extends StatefulWidget {
   final VoidCallback toggleTheme;
@@ -124,68 +129,6 @@ class _GlobalPositionScreenState extends State<GlobalPositionScreen> {
             label: 'Profile',
           ),
         ],
-      ),
-    );
-  }
-}
-
-class ContractScreen extends StatelessWidget {
-  const ContractScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Contracts'),
-      ),
-      body: const Center(
-        child: Text('Manage contracts'),
-      ),
-    );
-  }
-}
-
-class MailboxScreen extends StatelessWidget {
-  const MailboxScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Mailbox')),
-      body: const Center(
-        child: Text('Show messages'),
-      ),
-    );
-  }
-}
-
-class AccountScreen extends StatelessWidget {
-  const AccountScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Account'),
-      ),
-      body: const Center(
-        child: Text('Manage your account'),
-      ),
-    );
-  }
-}
-
-class PropertieScreen extends StatelessWidget {
-  const PropertieScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Properties'),
-      ),
-      body: const Center(
-        child: Text('Manage your properties'),
       ),
     );
   }

@@ -9,6 +9,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^6.2.1
+  intl: ^0.20.1
   shared_preferences: ^2.3.3
 
 dev_dependencies:
